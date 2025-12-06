@@ -1,9 +1,11 @@
 from fastapi.testclient import TestClient
 from app.api import app
+import allure 
 
 client = TestClient(app)
 
-
+@allure.feature("Library API Tests")
+@allure.story("Add Book")
 def test_add_book():
     response = client.post("/books", params={"title": "Dune"})
     assert response.status_code == 200
