@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from app.library import Library
+from app.external_api import fetch_book_from_api
 
 app = FastAPI(title="Mini Library API")
 
@@ -32,3 +33,8 @@ def list_books():
 @app.get("/books/search")
 def search_books(query: str):
     return {"result": library.search(query)}
+
+@app.get("/external/{book_id}")
+def get_book_from_external(book_id: int):
+    title = fetch_book_from_api(book_id)
+    return {"title": title}
